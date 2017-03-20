@@ -1,0 +1,24 @@
+eureka:
+  instance:
+    instance-id: gateway
+
+zuul:
+  # ignoreLocalService: false
+  routes:
+    external:
+      path: /vk/**
+      url: https://vk.com
+    interna1:
+      path: /internal_1/**
+      url: forward:/internal #€кшо сюдою, то можна можно /internal_1/local
+    internal2:
+      path: /internal_2/**
+      url: forward:/ #сюдою можна зайти на ендпо≥нти актуатора (/internal_2/internal/local, /internal_2/gw-page.html)
+    time:
+      path: /time/**
+      serviceId: time-service
+      stripPrefix: false
+# якшо все це не додавать, то ≥з √¬ будуть приходить статичн≥ ресурси
+#    default:
+#      path: /**
+#      serviceId: first-service

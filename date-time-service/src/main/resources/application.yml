@@ -1,0 +1,30 @@
+eureka:
+  instance:
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+
+spring:
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1500
+
+feign:
+  hystrix:
+    enabled: false
+
+# Регістр в імені сервіса грає роль. Має буть такий самий як використовується при звертанні до сервіса.
+time-service:
+  ribbon:
+    MaxAutoRetriesNextServer: 2
+
+DATE-SERVICE:
+  ribbon:
+    MaxAutoRetriesNextServer: 2
