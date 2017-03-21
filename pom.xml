@@ -18,5 +18,7 @@
 
         <module>gateway</module>
         <module>serviceregistry</module>
+
+        <module>amqp</module>
     </modules>
 </project>
