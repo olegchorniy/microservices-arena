@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sender</title>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+
+<label>
+    <input id="message"/>
+    Send
+</label>
+<button id="sendButton">Send</button>
+
+<script>
+    $(function () {
+
+        function sendMessage() {
+            $.ajax({
+                url: '/sendMessage',
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    message: $('#message').val()
+                })
+            }).done(function (response) {
+                console.log(response);
+            });
+        }
+
+        $('#sendButton').on('click', sendMessage);
+        $('#message').on('keyup', function (event) {
+            if (event.keyCode == 13) {
+                sendMessage();
+            }
+        });
+    });
+</script>
+</body>
+</html>
