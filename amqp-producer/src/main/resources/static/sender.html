@@ -8,10 +8,19 @@
 </head>
 <body>
 
-<label>
-    <input id="message"/>
-    Send
-</label>
+<p>
+    <label>
+        <span>Message:</span>
+        <input id="message"/>
+    </label>
+</p>
+<p>
+    <label>
+        <span>Routing key:</span>
+        <input id="routingKey"/>
+    </label>
+</p>
+
 <button id="sendButton">Send</button>
 
 <script>
@@ -24,7 +33,8 @@
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    message: $('#message').val()
+                    message: $('#message').val(),
+                    routingKey: $('#routingKey').val()
                 })
             }).done(function (response) {
                 console.log(response);
@@ -32,7 +42,7 @@
         }
 
         $('#sendButton').on('click', sendMessage);
-        $('#message').on('keyup', function (event) {
+        $('#message, #routingKey').on('keyup', function (event) {
             if (event.keyCode == 13) {
                 sendMessage();
             }

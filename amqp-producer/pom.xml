@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>my.example</groupId>
-    <artifactId>ampq</artifactId>
+    <artifactId>ampq-producer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>ampq</name>
+    <name>ampq-producer</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

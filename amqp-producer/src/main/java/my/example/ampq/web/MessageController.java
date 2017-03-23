@@ -1,6 +1,6 @@
 package my.example.ampq.web;
 
-import my.example.ampq.Constants;
+import my.example.ampq.ProducerConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
 import java.util.Map;
 
-//import org.springframework.amqp.core.AmqpTemplate;
+import static java.util.Collections.singletonMap;
 
 @RestController
 public class MessageController {
@@ -35,8 +34,12 @@ public class MessageController {
     public Map<String, Object> sendMessage(@RequestBody Request request) {
         LOGGER.info("Request received: {}", request);
 
-        amqpTemplate.convertAndSend(Constants.QUEUE_NAME, request);
+        amqpTemplate.convertAndSend(
+                ProducerConstants.EXCHANGE_NAME,
+                request.getRoutingKey(),
+                singletonMap("message", request.getMessage())
+        );
 
-        return Collections.singletonMap("success", true);
+        return singletonMap("success", true);
     }
 }

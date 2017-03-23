@@ -19,6 +19,7 @@
         <module>gateway</module>
         <module>serviceregistry</module>
 
-        <module>amqp</module>
+        <module>amqp-consumer</module>
+        <module>amqp-producer</module>
     </modules>
 </project>

@@ -1,30 +1,20 @@
-package my.example.ampq;
+package my.example.amqp.consumer;
 
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@SpringBootApplication
-public class AmpqApplication {
+@Configuration
+public class RabbitConfiguration {
 
     @Bean
     public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
-    }
-
-    @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
-        RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        template.setMessageConverter(messageConverter());
-
-        return template;
     }
 
     @Bean
@@ -39,11 +29,27 @@ public class AmpqApplication {
     }
 
     @Bean
-    public Queue myQueue() {
-        return new Queue(Constants.QUEUE_NAME, false);
+    public Queue myQueue1() {
+        return new Queue(ConsumerConstants.QUEUE_NAME1, false, false, false, null);
     }
 
-    public static void main(String[] args) {
-        SpringApplication.run(AmpqApplication.class, args);
+    @Bean
+    public Queue myQueue2() {
+        return new Queue(ConsumerConstants.QUEUE_NAME2, false, false, false, null);
+    }
+
+    @Bean
+    public Binding binding1() {
+        return BindingBuilder.bind(myQueue1()).to(myExchange()).with("my.*").noargs();
+    }
+
+    @Bean
+    public Binding binding2() {
+        return BindingBuilder.bind(myQueue2()).to(myExchange()).with("*.key").noargs();
+    }
+
+    @Bean
+    public Exchange myExchange() {
+        return new TopicExchange(ConsumerConstants.EXCHANGE_NAME, false, false, null);
     }
 }
