@@ -35,9 +35,5 @@ public class FirstConsumer {
     public void listerQueue1(@Payload Map<String, String> messageBody) {
         String message = messageBody.get("message");
         LOGGER.info("Message from queue1: {}", message);
-
-        if (message.equals("exit")) {
-            ctx.close();
-        }
     }
 }

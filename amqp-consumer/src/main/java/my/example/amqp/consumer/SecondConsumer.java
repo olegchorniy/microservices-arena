@@ -30,9 +30,5 @@ public class SecondConsumer {
     public void listerQueue2(@Payload Map<String, String> messageBody) {
         String message = messageBody.get("message");
         LOGGER.info("Message from queue2: {}", message);
-
-        if (message.equals("exit")) {
-            ctx.close();
-        }
     }
 }
