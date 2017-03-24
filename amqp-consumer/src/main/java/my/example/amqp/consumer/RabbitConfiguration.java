@@ -8,6 +8,7 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 public class RabbitConfiguration {
@@ -29,23 +30,27 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public Queue myQueue1() {
+    @Profile("first")
+    public Queue myFirstQueue() {
         return new Queue(ConsumerConstants.QUEUE_NAME1, false, false, false, null);
     }
 
     @Bean
-    public Queue myQueue2() {
+    @Profile("second")
+    public Queue mySecondQueue() {
         return new Queue(ConsumerConstants.QUEUE_NAME2, false, false, false, null);
     }
 
     @Bean
-    public Binding binding1() {
-        return BindingBuilder.bind(myQueue1()).to(myExchange()).with("my.*").noargs();
+    @Profile("first")
+    public Binding firstBinding() {
+        return BindingBuilder.bind(myFirstQueue()).to(myExchange()).with("my.*").noargs();
     }
 
     @Bean
-    public Binding binding2() {
-        return BindingBuilder.bind(myQueue2()).to(myExchange()).with("*.key").noargs();
+    @Profile("second")
+    public Binding secondBinding() {
+        return BindingBuilder.bind(mySecondQueue()).to(myExchange()).with("*.key").noargs();
     }
 
     @Bean

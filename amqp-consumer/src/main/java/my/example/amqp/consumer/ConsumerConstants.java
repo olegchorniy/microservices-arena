@@ -1,6 +1,9 @@
 package my.example.amqp.consumer;
 
-public class ConsumerConstants {
+public final class ConsumerConstants {
+
+    private ConsumerConstants() {
+    }
 
     public static final String EXCHANGE_NAME = "my.topic";
 
