@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author olch0615
@@ -25,8 +27,9 @@ public class UserController {
     }
 
     @RequestMapping(path = "/save", method = RequestMethod.POST)
-    public void saveUser(@RequestBody User user) {
+    public Map<String, String> saveUser(@RequestBody User user) {
         userService.saveUser(user);
+        return Collections.singletonMap("status", "true");
     }
 
     @RequestMapping(path = "/getAll", method = RequestMethod.GET)

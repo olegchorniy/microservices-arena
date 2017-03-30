@@ -5,6 +5,7 @@ import my.example.cassandra.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author olch0615
@@ -27,6 +28,7 @@ public class UserService {
     }
 
     public void saveUser(User user) {
+        user.setId(UUID.randomUUID());
         userMapper.save(user);
     }
 }

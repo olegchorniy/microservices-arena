@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<p>
+    <label>Name:
+        <input name="name"/>
+    </label>
+</p>
+<p>
+    <label>
+        Age:
+        <input name="age"/>
+    </label>
+</p>
+<p>
+    <label>
+        City:
+        <input name="city"/>
+    </label>
+</p>
+<p>
+    <label>
+        Street:
+        <input name="street"/>
+    </label>
+</p>
+<p>
+    <label>
+        House:
+        <input name="house"/>
+    </label>
+</p>
+<p>
+    <button id="addUser">Add new</button>
+</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>City</th>
+        <th>Street</th>
+        <th>House</th>
+    </tr>
+    </thead>
+
+    <tbody id="users">
+    </tbody>
+</table>
+<script>
+    $(function () {
+
+        function createUser() {
+            return {
+                name: $('input[name="name"]').val(),
+                age: $('input[name="age"]').val(),
+                address: {
+                    city: $('input[name="city"]').val(),
+                    street: $('input[name="street"]').val(),
+                    house: $('input[name="house"]').val()
+                }
+            };
+        }
+
+        function saveUser(user) {
+            return $.ajax({
+                url: '/user/save',
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(user)
+            });
+        }
+
+        function loadUsers() {
+            return $.ajax({
+                url: '/user/getAll',
+                method: 'GET',
+                contentType: 'application/json'
+            });
+        }
+
+        function createRow(user) {
+            return '<tr>' +
+                    '   <td>' + user.id + '</td>' +
+                    '   <td>' + user.name + '</td>' +
+                    '   <td>' + user.age + '</td>' +
+                    '   <td>' + user.address.city + '</td>' +
+                    '   <td>' + user.address.street + '</td>' +
+                    '   <td>' + user.address.house + '</td>' +
+                    '</tr>';
+        }
+
+        function updateTable(users) {
+            var $tableBody = $("#users");
+
+            $tableBody.empty();
+
+            $.each(users, function (i, user) {
+                $tableBody.append($(createRow(user)));
+            });
+        }
+
+        function updateTableWithFreshData() {
+            loadUsers().done(updateTable);
+        }
+
+        $('#addUser').on('click', function () {
+            var promise = saveUser(createUser());
+            promise.done(updateTableWithFreshData);
+        });
+
+        updateTableWithFreshData();
+    });
+</script>
+</body>
+</html>
