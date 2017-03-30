@@ -1,0 +1,2 @@
+cassandra.keyspace: test_keyspace
+cassandra.contact-point: 127.0.0.1
