@@ -1,12 +1,12 @@
-package my.example.cassandra.misc;
+package my.example.cassandra.nativeapi.misc;
 
 import com.datastax.driver.core.*;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 import com.datastax.driver.mapping.Result;
 import my.example.cassandra.CassandraConstants;
-import my.example.cassandra.entity.User;
-import my.example.cassandra.service.UserAccessor;
+import my.example.cassandra.nativeapi.entity.User;
+import my.example.cassandra.nativeapi.service.UserAccessor;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 *
 *   !!! Don't touch any port !!!
 * */
-public class UserCassandraTest {
+public class UserCassandraExamples {
 
     public static void main(String[] args) throws IOException {
         simpleSelectWithConsistencyLevel();

@@ -58,15 +58,14 @@
     $(function () {
 
         function createUser() {
-            return {
-                name: $('input[name="name"]').val(),
-                age: $('input[name="age"]').val(),
-                address: {
-                    city: $('input[name="city"]').val(),
-                    street: $('input[name="street"]').val(),
-                    house: $('input[name="house"]').val()
-                }
-            };
+            var user = {};
+
+            $('input').each(function () {
+                var $this = $(this);
+                user[$this.attr('name')] = $this.val();
+            });
+
+            return user;
         }
 
         function saveUser(user) {
@@ -92,16 +91,14 @@
                     '   <td>' + user.id + '</td>' +
                     '   <td>' + user.name + '</td>' +
                     '   <td>' + user.age + '</td>' +
-                    '   <td>' + user.address.city + '</td>' +
-                    '   <td>' + user.address.street + '</td>' +
-                    '   <td>' + user.address.house + '</td>' +
+                    '   <td>' + user.city + '</td>' +
+                    '   <td>' + user.street + '</td>' +
+                    '   <td>' + user.house + '</td>' +
                     '</tr>';
         }
 
         function updateTable(users) {
-            var $tableBody = $("#users");
-
-            $tableBody.empty();
+            var $tableBody = $("#users").empty();
 
             $.each(users, function (i, user) {
                 $tableBody.append($(createRow(user)));
@@ -113,8 +110,7 @@
         }
 
         $('#addUser').on('click', function () {
-            var promise = saveUser(createUser());
-            promise.done(updateTableWithFreshData);
+            saveUser(createUser()).done(updateTableWithFreshData);
         });
 
         updateTableWithFreshData();

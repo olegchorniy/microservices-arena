@@ -1,7 +1,7 @@
-package my.example.cassandra.service;
+package my.example.cassandra.nativeapi.service;
 
 import com.datastax.driver.mapping.Mapper;
-import my.example.cassandra.entity.User;
+import my.example.cassandra.nativeapi.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

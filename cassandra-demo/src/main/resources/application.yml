@@ -1,2 +1,7 @@
 cassandra.keyspace: test_keyspace
 cassandra.contact-point: 127.0.0.1
+
+spring.autoconfigure.exclude:
+  - org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.cassandra.CassandraDataAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.cassandra.CassandraRepositoriesAutoConfiguration

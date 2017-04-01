@@ -1,11 +1,11 @@
-package my.example.cassandra;
+package my.example.cassandra.nativeapi.config;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
-import my.example.cassandra.entity.User;
-import my.example.cassandra.service.UserAccessor;
+import my.example.cassandra.nativeapi.entity.User;
+import my.example.cassandra.nativeapi.service.UserAccessor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  *         Time: 5:10 PM
  */
 @Configuration
-public class CassandraConfig {
+public class NativeCassandraConfig {
 
     @Value("${cassandra.keyspace}")
     private String keyspace;

@@ -1,4 +1,4 @@
-package my.example.cassandra.entity;
+package my.example.cassandra.nativeapi.entity;
 
 import com.datastax.driver.mapping.annotations.ClusteringColumn;
 import com.datastax.driver.mapping.annotations.PartitionKey;

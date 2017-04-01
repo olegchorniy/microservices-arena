@@ -1,4 +1,4 @@
-package my.example.cassandra.entity;
+package my.example.cassandra.nativeapi.entity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

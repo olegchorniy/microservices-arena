@@ -1,4 +1,4 @@
-package my.example.cassandra.misc;
+package my.example.cassandra.nativeapi.misc;
 
 import com.datastax.driver.core.*;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.function.Consumer;
 
-public class CassandraTest {
+public class CassandraExamples {
 
     private static final Random random = new Random();
 

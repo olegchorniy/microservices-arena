@@ -1,14 +1,8 @@
-package my.example.cassandra.entity;
+package my.example.cassandra.spring.entity;
 
-import com.datastax.driver.mapping.annotations.UDT;
-import my.example.cassandra.CassandraConstants;
+import org.springframework.data.cassandra.mapping.UserDefinedType;
 
-/**
- * @author olch0615
- *         Date: 3/29/2017
- *         Time: 11:53 AM
- */
-@UDT(keyspace = CassandraConstants.KEYSPACE, name = "address")
+@UserDefinedType("address")
 public class Address {
 
     private String city;
@@ -40,14 +34,5 @@ public class Address {
     public Address setHouse(int house) {
         this.house = house;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return "Address{" +
-                "city='" + city + '\'' +
-                ", street='" + street + '\'' +
-                ", house=" + house +
-                '}';
     }
 }

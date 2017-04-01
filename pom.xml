@@ -23,5 +23,7 @@
         <module>amqp-producer</module>
 
         <module>cassandra-demo</module>
+
+        <module>standalone-webapp</module>
     </modules>
 </project>
