@@ -1,0 +1,5 @@
+1.  З точки зору rabbitmq, Spring працює в режимі autoAck = false. Spring виконує ack автоматично на основі
+    результату роботи методу: виключення або припенення роботи по іншим причинам означає, що доставку не буде
+    підтверджено.
+    (див.   org.springframework.amqp.core.AcknowledgeMode,
+            org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer).

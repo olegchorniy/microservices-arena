@@ -10,5 +10,5 @@ public final class ProducerConstants {
     private ProducerConstants() {
     }
 
-    public static final String EXCHANGE_NAME = "my.topic";
+    public static final String EXCHANGE_NAME = "my.spring.topic";
 }
