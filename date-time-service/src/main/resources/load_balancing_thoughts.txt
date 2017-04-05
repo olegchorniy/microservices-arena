@@ -1,0 +1,66 @@
+1. ####################### ResTemplate / RetryTemplate ########################
+RetryLoadBalancerInterceptor - виконує запити із retry-ами.
+
+Ланцюжок:
+RetryLoadBalancerInterceptor#intercept
+	RetryTemplate#execute
+		RibbonLoadBalancerClient#execute
+			LoadBalancerRequest#apply
+				-> тут продовжується звичайний flow ResTemplate, згідно його конфігурації.
+
+RetryPolicy: із spring-retry
+	implemented by InterceptorRetryPolicy
+
+LoadBalancedRetryPolicy:
+	implemented by anonymous class in RibbonLoadBalancedRetryPolicyFactory
+	
+ServiceInstance для запроса завжди проставлений у LoadBalancedRetryContext
+1. Перший раз у методі RetryPolicy#canRetry
+2. Надалі, якщо потрібно то у методі LoadBalancedRetryPolicy#registerThrowable
+
+
+Вибір інстанса для запиту:
+ServiceInstanceChooser:
+	implemented by RibbonLoadBalancerClient: делегує роботу com.netflix.loadbalancer.ILoadBalancer
+	
+	
+список доступних серверів для вибору береться із com.netflix.loadbalancer.BaseLoadBalancer#allServerList
+
+
+!!! За кожен сервіс відповідає свій екземпляр ILoadBalancer
+com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList - надає список інстансів для даного сервіса.
+
+
+2. ################################# Feign ##################################
+feign.Client: Виконує запити
+	implemented by LoadBalancerFeignClient
+	
+RetryableFeignLoadBalancer (extends FeignLoadBalancer) - виконує запити через RetryTemplate.
+	RetryPolicy - те саме шо вище, анонімний клас із RibbonLoadBalancedRetryPolicyFactory,
+	але (!!!) завернутий в FeignRetryPolicy.
+	
+	Відмінність у тому, шо, на відміну від зв'язки вище, у Feign в даний момент URL 
+	певного сервіса уже є, тому у методі canRetry вибору інстанса не відбувається.
+	Перший інстанс сервіса дістається через:
+
+	RetryableFeignLoadBalancer#executeWithLoadBalancer
+		LoadBalancerCommand#submit
+			LoadBalancerCommand#selectServer
+	
+	Всі наступні інстанси беруться по тій самій схемі, у методі LoadBalancedRetryPolicy#registerThrowable
+	
+Стандартний Retryer із Feign-а не працює!
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+com.netflix.loadbalancer.AbstractServerPredicate#chooseRoundRobinAfterFiltering - тут відбувається власне вибір інстанса.
+
+LoadBalancerContext - тут ведеться статистика запитів, для обох варіантів.
+
+RibbonLoadBalancerClient#execute
+	- тут записуються фейли для кожного випробуваного інстанса сервіса,
+	перед тим як спробувать новий.
+
+Для Feign те саме відбувається у LoadBalancerCommand#submit, але (!!!) вся логіка із retry-ами
+відбувається на рівень нижче і в цьому місці проміжних фейлів просто не видно, сюди фейл дійде тільки
+якщо всі інстанси сервіса упадуть. Тому лічильники фейлів по нулям і інстанси при фільтрації не відсіюються.
