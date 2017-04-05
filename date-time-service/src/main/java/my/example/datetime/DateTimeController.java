@@ -1,7 +1,6 @@
 package my.example.datetime;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -9,20 +8,21 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class DateTimeController {
 
-    @Autowired
-    private RestTemplate template;
+    private final RestTemplate template;
+    private final TimeFeignClient timeClient;
 
     @Autowired
-    private TimeFeignClient timeClient;
-
-    @Autowired
-    private ApplicationContext ctx;
+    public DateTimeController(TimeFeignClient timeClient, RestTemplate template) {
+        this.timeClient = timeClient;
+        this.template = template;
+    }
 
     @RequestMapping("/dateTime")
     public String dateTime() {
-        //String time = template.getForObject("http://TIME-SERVICE/time", String.class);
 
-        String time = timeClient.getTime();
+        String time = timeClient.getTime().get("time");
+
+        //WARNING: rest template doesn't protected by RetryTemplate anymore.
         String date = template.getForObject("http://DATE-SERVICE/date", String.class);
 
         return date + " - " + time;

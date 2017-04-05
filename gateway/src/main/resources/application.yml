@@ -10,15 +10,15 @@ zuul:
       url: https://vk.com
     interna1:
       path: /internal_1/**
-      url: forward:/internal #якшо сюдою, то можна можно /internal_1/local
+      url: forward:/internal #СЏРєС€Рѕ СЃСЋРґРѕСЋ, С‚Рѕ РјРѕР¶РЅР° РјРѕР¶РЅРѕ /internal_1/local
     internal2:
       path: /internal_2/**
-      url: forward:/ #сюдою можна зайти на ендпоінти актуатора (/internal_2/internal/local, /internal_2/gw-page.html)
+      url: forward:/ #СЃСЋРґРѕСЋ РјРѕР¶РЅР° Р·Р°Р№С‚Рё РЅР° РµРЅРґРїРѕС–РЅС‚Рё Р°РєС‚СѓР°С‚РѕСЂР° (/internal_2/internal/local, /internal_2/gw-page.html)
     time:
       path: /time/**
       serviceId: time-service
       stripPrefix: false
-# Якшо все це не додавать, то із ГВ будуть приходить статичні ресурси
+# РЇРєС€Рѕ РІСЃРµ С†Рµ РЅРµ РґРѕРґР°РІР°С‚СЊ, С‚Рѕ С–Р· Р“Р’ Р±СѓРґСѓС‚СЊ РїСЂРёС…РѕРґРёС‚СЊ СЃС‚Р°С‚РёС‡РЅС– СЂРµСЃСѓСЂСЃРё
 #    default:
 #      path: /**
 #      serviceId: first-service

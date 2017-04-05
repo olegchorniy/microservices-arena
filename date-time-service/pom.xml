@@ -41,11 +41,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!--
+
+        За його наявності в class-path всі автоматично налаштовуються на роботу із ним. (RestTemplate, Feign).
+        Але якщо у випадку RestTemplate там є тільки малоймовірний race condition за retryPolicy, то для Feign
+        відвалюється збір статистики по фейлам, яку веде Ribbon. Тому радиться брати spring-retry (і RetryTemplate)
+        тільки у крайніх випадках.
+
         <dependency>
             <groupId>org.springframework.retry</groupId>
             <artifactId>spring-retry</artifactId>
             <version>1.2.0.RELEASE</version>
         </dependency>
+
+        -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

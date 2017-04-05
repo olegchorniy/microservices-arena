@@ -23,8 +23,17 @@ feign:
 # Регістр в імені сервіса грає роль. Має буть такий самий як використовується при звертанні до сервіса.
 time-service:
   ribbon:
+    # для Feign ця опція працює. Для RestTemplate
+    # треба все це налаштовувати через ClientHttpRequestFactory
+    ConnectTimeout: 500
     MaxAutoRetriesNextServer: 2
 
 DATE-SERVICE:
   ribbon:
     MaxAutoRetriesNextServer: 2
+
+
+#### Loggers ####
+logging.level:
+  my.example.datetime.TimeFeignClient: DEBUG
+  # org.springframework: DEBUG
