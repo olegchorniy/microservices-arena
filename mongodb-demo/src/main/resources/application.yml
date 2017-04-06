@@ -1,0 +1,11 @@
+spring:
+  data:
+    mongodb:
+      database: test_db
+      uri: mongodb://127.0.0.1:27001,127.0.0.1:27002/?replicaSet=rs0
+
+management:
+  health:
+    sensitive: false
+  security:
+    enabled: false
