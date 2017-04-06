@@ -3,9 +3,7 @@ package my.example.mongodb.spring;
 import my.example.mongodb.spring.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +28,10 @@ public class MongoWebController {
     @RequestMapping("/getByName/{name}")
     public List<Person> getByName(@PathVariable("name") String name) {
         return personRepository.findByName(name);
+    }
+
+    @RequestMapping(path = "/save", method = RequestMethod.POST)
+    public Person save(@RequestBody Person person) {
+        return personRepository.save(person);
     }
 }
