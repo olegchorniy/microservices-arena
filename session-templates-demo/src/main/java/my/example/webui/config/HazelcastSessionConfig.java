@@ -9,9 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.session.hazelcast.HazelcastSessionRepository;
 import org.springframework.session.hazelcast.PrincipalNameExtractor;
-import org.springframework.session.hazelcast.config.annotation.web.http.EnableHazelcastHttpSession;
 
-@EnableHazelcastHttpSession
 @Configuration
 public class HazelcastSessionConfig {
 
