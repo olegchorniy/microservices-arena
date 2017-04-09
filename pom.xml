@@ -26,5 +26,6 @@
         <module>mongodb-demo</module>
 
         <module>standalone-webapp</module>
+        <module>session-templates-demo</module>
     </modules>
 </project>

@@ -1,6 +1,10 @@
 eureka:
   instance:
     instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+  # client:
+    # to prevent server from register itself within Eureka and to allow it
+    # only fetch the information about other registered services.
+    # registerWithEureka: false
 
 spring:
   cloud:
