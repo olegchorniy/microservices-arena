@@ -1,0 +1,34 @@
+1.  Run standalone mongo instance:
+    mongod --port 27123 --dbpath D:\servers\mongodb_data_directory\standalone
+    There is also another useful option: --bind_ip <ip_address>.
+
+2.  Work in mongo shell:
+    2.1 Run shell:
+        mongo --port 27123
+    2.2 Switch to database (will be create automatically if doesn't exist):
+        use <db_name>
+    2.3 Commands for work with collection:
+        db.<collection_name>.<command>
+        db.test_coll.ensureIndex({age: 1}) - create index
+        db.test_coll.getIndexes()          - show existing indexes
+
+3.  Run replica set:
+    mongod --port 27003 --dbpath D:\servers\mongodb_data_directory\replica_set_3 --replSet rs0 --smallfiles --oplogSize 128
+
+4.  Example query, which return the next page based on the seek method.
+    It is assumed that the index {postId: 1, time: -1, _id: -1} exists in the comments collection.
+
+    db.comments.find({
+   		postId: 1,
+   		$and: [
+   			{
+   				time: { $lte: time }
+   			},
+   			{
+   				$or: [
+   					{ time: { $ne: time}},
+   					{  _id: { $lt: id}}
+   				]
+   			}
+   		]
+   	}).sort({time: -1, _id: -1}).limit(10)

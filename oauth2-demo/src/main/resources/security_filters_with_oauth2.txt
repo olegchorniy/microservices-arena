@@ -1,0 +1,17 @@
+Main filter chain:
+	metrics (boot)
+	encoding (spring)
+	hidden method filter (spring)
+	http put form content filter (spring)
+s   oauth2 client context filter (spring)
+		-  manages redirects if a UserRedirectRequiredException is caught (it might be thrown 
+		   by instances of AccessTokenProvider which correspond to different oauth2 grant types).
+	request context filter (spring)
+s	spring security filter chain (spring)
+	web request logging filter (boot, actuator)
+	app context header filter (boot, actuator)
+	websocket filter (tomcat)
+	
+
+Security filter chain:
+6 different filter chains.
