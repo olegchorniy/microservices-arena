@@ -10,3 +10,30 @@
 
 2.  There aren't any message timeouts; RabbitMQ will redeliver the message when the consumer dies.
     It's fine even if processing a message takes a very, very long time.
+
+
+3. Delayed messages:
+    1) Установить плагін:
+        - скачать rabbitmq_delayed_message_exchange тут http://www.rabbitmq.com/community-plugins.html
+        - покласти файл у {InstallDir}\RabbitMQ\rabbitmq_server-version\plugins
+        - виконать команду rabbitmq-plugins enable rabbitmq_delayed_message_exchange
+
+    2) Треба створити exchange спец. типу - x-delayed-message:
+
+        Map<String, Object> args = new HashMap<String, Object>();
+        args.put("x-delayed-type", "direct");
+        channel.exchangeDeclare("my-exchange", "x-delayed-message", true, false, args);
+
+    3) При відправці у хедерах проставляємо затримку:
+
+        byte[] messageBodyBytes = "delayed payload".getBytes("UTF-8");
+        Map<String, Object> headers = new HashMap<String, Object>();
+        headers.put("x-delay", 5000);
+        AMQP.BasicProperties.Builder props = new AMQP.BasicProperties.Builder().headers(headers);
+        channel.basicPublish("my-exchange", "", props.build(), messageBodyBytes);
+
+    (https://github.com/rabbitmq/rabbitmq-delayed-message-exchange)
+
+    4) У Spring при конфігурації exchange-а можно вказати опцію delayed.
+
+    (https://habrahabr.ru/post/318118/)
