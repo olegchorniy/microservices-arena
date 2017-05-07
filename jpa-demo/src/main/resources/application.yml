@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    password: hotel_password
+    username: hotel_admin
+    url: jdbc:postgresql://localhost:5432/hotel_booking
+  jpa:
+    show-sql: true
