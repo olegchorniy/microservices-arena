@@ -15,6 +15,10 @@
 3.  Run replica set:
     mongod --port 27003 --dbpath D:\servers\mongodb_data_directory\replica_set_3 --replSet rs0 --smallfiles --oplogSize 128
 
+    Do the following in the console:
+    rs.initiate();
+    rs.add("<hostname>:<port>");
+
 4.  Example query, which return the next page based on the seek method.
     It is assumed that the index {postId: 1, time: -1, _id: -1} exists in the comments collection.
 
