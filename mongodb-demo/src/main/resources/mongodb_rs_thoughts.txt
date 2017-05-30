@@ -39,3 +39,8 @@
     для проведення поточної операції.
 
     Оновлення списку серверів проходить у com.mongodb.connection.DefaultServerMonitor.
+
+3.  MongoHealthIndicator із Спрінга ігнорує встановлений ReadPreference, замінюючи його на primary. Якшо це неприпустимо,
+    то треба вирубить його через management.health.defaults.enabled = false.
+    Але!, команду, яку намагається виконати дефолтний хелсчек (buildInfo) сам драйвер монги вважає за необхідне виконувати
+    на primary ноді. Тому будь-який інший ReadPreference просто ігнорується.
