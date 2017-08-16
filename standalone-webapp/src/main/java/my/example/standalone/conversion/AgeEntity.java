@@ -1,8 +1,15 @@
 package my.example.standalone.conversion;
 
-public class TargetEntity {
+public class AgeEntity {
 
     private int age;
+
+    public AgeEntity() {
+    }
+
+    public AgeEntity(int age) {
+        this.age = age;
+    }
 
     public int getAge() {
         return age;
