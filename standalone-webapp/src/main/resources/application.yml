@@ -1,2 +1,7 @@
 server:
   port: 8090
+  ssl:
+    key-password: 123456
+    key-store-password: 123456
+    # Created according to the article https://tomcat.apache.org/tomcat-7.0-doc/ssl-howto.html
+    key-store: classpath:tomcat.keystore

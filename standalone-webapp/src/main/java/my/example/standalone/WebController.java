@@ -5,12 +5,15 @@ import my.example.standalone.conversion.SourceEntity;
 import my.example.standalone.service.AgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
 
 @RestController
+@CrossOrigin
 public class WebController {
 
     private final ConversionService conversionService;
@@ -31,5 +34,26 @@ public class WebController {
     @GetMapping("/age/{name}")
     public AgeEntity getAge(@PathVariable("name") String name) {
         return ageService.getAge(name);
+    }
+
+    /**
+     * Receives requests sent by:
+     * <pre>
+     * $.ajax({
+     *     url: 'https://localhost:8090/html',
+     *     method: 'POST',
+     *     data: document.body.innerHTML,
+     *     contentType: 'text/plain'
+     *  })
+     *  .done(function(res) {
+     *      console.log(res);
+     *  });
+     * </pre>
+     */
+    @PostMapping("/html")
+    public Object html(@RequestBody String content) throws IOException {
+        Files.write(Paths.get("C:/files/ytb.html"), Arrays.asList(content));
+
+        return "OK";
     }
 }
