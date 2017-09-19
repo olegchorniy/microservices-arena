@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Date;
 
 @RestController
 @CrossOrigin
@@ -29,6 +30,11 @@ public class WebController {
     @RequestMapping("/converter")
     public String testConverter() {
         return "Can convert: " + conversionService.canConvert(SourceEntity.class, AgeEntity.class);
+    }
+
+    @RequestMapping("/test")
+    public String test() {
+        return "Test: " + new Date();
     }
 
     @GetMapping("/age/{name}")
